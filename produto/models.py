@@ -5,6 +5,8 @@ from django.utils.text import slugify
 from PIL import Image
 import os
 
+from utils import utils
+
 # Create your models here.
 class Produto(models.Model):
     TIPO = (('V', 'Variável'), ('S', 'Simples'))
@@ -20,10 +22,10 @@ class Produto(models.Model):
     tipo = models.CharField(default='V', choices=TIPO, max_length=1)
 
     def get_preco_formatado(self):
-        return f'{self.preco_marketing:.2f}'.replace('.', ',')
+        return utils.formata_preco(self.preco_marketing)
 
     def get_preco_promo_formatado(self):
-        return f'{self.preco_marketing_promocional:.2f}'.replace('.', ',')
+        return utils.formata_preco(self.preco_marketing_promocional)
 
     get_preco_formatado.short_description = 'Preço'
     get_preco_promo_formatado.short_description = 'Preço Promocional'
